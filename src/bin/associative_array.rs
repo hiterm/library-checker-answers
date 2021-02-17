@@ -1,10 +1,16 @@
-use std::collections::HashMap;
+use std::{
+    collections::HashMap,
+    io::{stdout, BufWriter, Write},
+};
 
 use scanner::{read_stdin, Scanner};
 
 fn main() {
     let all_stdin = read_stdin();
     let mut scanner = Scanner::new(&all_stdin);
+
+    let out = stdout();
+    let mut out = BufWriter::new(out.lock());
 
     let q: usize = scanner.next();
     let mut map = HashMap::new();
@@ -19,7 +25,7 @@ fn main() {
             1 => {
                 let k: u64 = scanner.next();
                 let v = map.get(&k).unwrap_or(&0);
-                println!("{}", v);
+                writeln!(out, "{}", v).unwrap();
             }
             _ => unreachable!(),
         }
